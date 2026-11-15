@@ -27,7 +27,12 @@ qualflare-ai/
 ├── hooks/
 │   ├── hooks.json           # Registers the Stop hook
 │   ├── stop-hook.mjs        # Node script: reads transcript, suggests /qf-cover
+│   ├── classify.mjs         # Nudge rules, shared with the omp extension
 │   └── stop-hook.test.mjs   # Tests (node --test)
+├── omp/                     # omp support (package.json "omp.extensions")
+│   ├── qualflare.mjs        # Fills ${CLAUDE_PROJECT_DIR}/${CLAUDE_PLUGIN_ROOT}, end-of-session nudge
+│   ├── lib.mjs              # Pure helpers (substitution, omp edit parsing)
+│   └── lib.test.mjs
 ├── scripts/
 │   ├── check-slugs.sh            # Verify framework-slugs.md matches the CLI's Go source
 │   ├── slugs.mjs                 # Slug parity logic (Go source or `qf list-formats` output)

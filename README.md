@@ -45,6 +45,19 @@ Every command runs from the Claude Code chat — no terminal, no config files.
 | `/qf-state` | When you want to see what Qualflare knows — shows frameworks, file counts, and hook status |
 | `/qf-hook on\|off` | Any time — toggle the end-of-session coverage nudge on or off |
 
+## Using it in omp
+
+The same plugin works in [omp](https://omp.sh), which reads this repository's marketplace file:
+
+```sh
+omp plugin marketplace add Qualflare/qualflare-claude-code
+omp plugin install qualflare@qualflare
+```
+
+Skills run as `/skill:qf-init`, `/skill:qf-run`, `/skill:qf-fix` and so on (omp also picks them when your request matches), and the hook toggle is `/qualflare:qf-hook on|off`. A small omp extension (`omp/qualflare.mjs`) fills in the project and plugin paths the skills use, and shows the coverage nudge at the end of a session, on the same rules as in Claude Code.
+
+To give omp the Qualflare MCP tools as well, add the server with `/mcp add` (URL `https://api.qualflare.com/mcp`, type `http`), then sign in with `/mcp reauth <name>`.
+
 ## The coverage nudge
 
 When enabled during `/qf-init`, a quiet nudge appears at the end of any session where you edited source files without touching the tests:

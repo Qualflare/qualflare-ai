@@ -89,7 +89,9 @@ test('asking the user to paste a token into chat is flagged', () => {
 test('token-safe wording is not flagged', () => {
   for (const body of [
     "The CLI's hint `No projects configured. Run 'qf login <identifier> <token>' to get started.` means none.",
+    "The CLI's hint `No projects configured. Run 'qf login <identifier>' to sign in.` means none.",
     'In your terminal run `qf login <identifier>`.',
+    'Add `--no-browser` on an SSH machine: `qf login <identifier> --no-browser`.',
     'Run `qf login acme --force` to overwrite.',
     'Do not paste the token here.',
     'qf login acme-api   (run in your terminal)',

@@ -199,7 +199,7 @@ This prints one saved identifier per line. For each required identifier that is 
 > ```
 > qf login <identifier>
 > ```
-> It asks for the token at a hidden prompt. Get a token from https://app.qualflare.com/project/<identifier>/settings/access-tokens, then re-run `/qf-run`. Do not paste the token here."
+> It opens your browser to sign in and approve (add `--no-browser` on an SSH or remote machine). Then re-run `/qf-run`. Do not paste a token or code here."
 
 Stop here if any required identifier is missing.
 
@@ -232,7 +232,7 @@ The `<identifier>` is the value from the `## Packages` table row whose `Path` ma
 | Exit code | Meaning (qf CLI) | What to do |
 |-----------|------------------|------------|
 | `0` | Uploaded | Record the item as uploaded. |
-| `3` | The server rejected the token (401) | Tell the user: "The saved token for `<identifier>` was rejected. In your own terminal, run `qf login <identifier>` and confirm the overwrite, then re-run `/qf-run`." Skip the remaining uploads for this identifier; continue with other identifiers. |
+| `3` | The server rejected the token (401) | Tell the user: "The saved sign-in for `<identifier>` was rejected or has ended. In your own terminal, run `qf login <identifier>` and confirm the overwrite, then re-run `/qf-run`." Skip the remaining uploads for this identifier; continue with other identifiers. |
 | `4` | Access denied or plan limit (402/403) | Record the failure with the stderr verbatim. Continue. |
 | `5` | Not found (404) | Record the failure with the stderr verbatim. If the stderr says the environment was not found, add: "Your Qualflare project has no environment named `<$QF_ENVIRONMENT, or development if unset>`. Create it in the project settings, or set `QF_ENVIRONMENT` to an environment the project has." Continue. |
 | `7` | Transient (429 or 5xx) | Retry the same upload once. If it fails again, record the failure with the stderr verbatim. Continue. |

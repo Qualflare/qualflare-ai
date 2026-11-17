@@ -44,17 +44,17 @@ qf projects
 ```
 
 Two output shapes to handle:
-- The CLI's hint `No projects configured. Run 'qf login <identifier> <token>' to get started.` → treat as zero configured.
+- The CLI's hint `No projects configured. Run 'qf login <identifier>' to sign in.` (older CLIs word the rest of the line differently, so match the prefix `No projects configured`, not the whole line) → treat as zero configured.
 - One identifier per line → parse into a set.
 
 Cross-reference each `Identifier` from `## Packages` against the configured set. Emit one result entry per package:
 
 - **Identifier present in `qf projects`:** status `ok` — label `Auth (${identifier})`, detail `configured`.
-- **Identifier absent:** status `warn` — label `Auth (${identifier})`, detail `not configured`, fix `qf login ${identifier}` — run it in your own terminal; it asks for the token at a hidden prompt (get your token from https://qualflare.com/settings/api-keys). Never solicit the token in the chat.
+- **Identifier absent:** status `warn` — label `Auth (${identifier})`, detail `not configured`, fix `qf login ${identifier}` — run it in your own terminal; it opens the browser to sign in and approve (add `--no-browser` on an SSH or remote machine). Never run login yourself and never solicit a token or code in the chat. Tokens are only for CI (`QF_TOKEN`; create one under Project Settings › Access Tokens in the app).
 
 For single-package projects, omit the `(${identifier})` suffix from the label and use just `Auth`.
 
-Tokens live in `~/.config/qualflare/config.toml` (or platform equivalent) after `qf login` — there is no environment-variable fallback.
+Sign-ins live in `~/.config/qualflare/config.toml` (or platform equivalent) after `qf login`. Project commands use the saved sign-in; `QF_TOKEN` is read only by `qf login`.
 
 **If `QF_API_KEY` is set in the environment:**
 

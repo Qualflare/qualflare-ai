@@ -2,6 +2,7 @@
 Generic (JUnit-compatible):
   - junit
   - ctrf
+  - allure
   - qualflare-json
 
 Unit Testing:

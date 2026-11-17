@@ -15,6 +15,7 @@ These are the **only valid slugs** accepted by `qf <identifier> collect --format
 |------|----------|-------------------|-------|
 | `junit` | Generic | `pom.xml`, `build.gradle`, `@Test` annotations, JUnit XML reports | Catch-all for JVM runners that produce JUnit XML (Surefire, Failsafe). Prefer `testng` when project uses TestNG directly. |
 | `ctrf` | Generic | A CTRF reporter in deps (`jest-ctrf-json-reporter`, `playwright-ctrf-json-reporter`, `cypress-ctrf-json-reporter`, `mocha-ctrf-json-reporter`, `wdio-ctrf-json-reporter`, `pytest-json-ctrf`, …), a `ctrf/` output directory, `ctrf-report.json` | Common Test Report Format JSON ([ctrf.io](https://ctrf.io)). Only when a tool has no dedicated slug (WebdriverIO, Jasmine, Nightwatch, CodeceptJS, .NET MSTest/NUnit/xUnit) or the project already emits CTRF. Report files, not test sources. |
+| `allure` | Generic | An Allure adapter in deps (`allure-pytest`, `allure-playwright`, `allure-jest`, `allure-cucumberjs`, `allure-testng`, `allure-junit5`, …), an `allure-results/` directory of `*-result.json` files | An Allure 2 results directory. Like `ctrf` it is a format, not a tool: only when the project already writes Allure results and no dedicated slug fits. Upload the `allure-results/` directory, not the HTML report. |
 | `qualflare-json` | Generic | A Qualflare reporter in deps (`@qualflare/playwright`, `@qualflare/cypress`, `@qualflare/cucumberjs`, `@qualflare/vitest`, `@qualflare/jest`; `@qualflare/webdriverio` and `@qualflare/appium` are detected as their own slugs below) configured to write files (`outputDir` / `outputFile`) | The Collect JSON written by Qualflare's own reporters, used to merge sharded CI runs. Report files, not test sources; the location is whatever the reporter's `outputDir` says. |
 | `python` | Unit | `pytest.ini`, `pyproject.toml` (`[tool.pytest...]`), `setup.cfg` (`[tool:pytest]`), `conftest.py`, `requirements*.txt` containing `pytest` | The slug for pytest results |
 | `golang` | Unit | `*_test.go` files, `go.mod` present | The slug for go test results (`go test -json`) |
@@ -56,6 +57,7 @@ Every cell in the second column is either a comma-separated list of backticked g
 |------|---------------|
 | `junit` | `**/pom.xml`, `**/build.gradle` |
 | `ctrf` | `**/ctrf/**/*.json`, `**/ctrf-report.json` |
+| `allure` | `**/allure-results/*-result.json` |
 | `qualflare-json` | *(skip counting)* |
 | `python` | `tests/**/test_*.py`, `tests/**/*_test.py`, `**/test_*.py` |
 | `golang` | `**/*_test.go` |

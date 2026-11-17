@@ -111,7 +111,7 @@ Run `qf version` to verify the CLI is installed:
 - **Exit 127 or not found:** add: "qf CLI not found. Install it from https://qualflare.com/docs/cli". Skip the identifier check.
 
 If CLI is available, run `qf projects` to list locally configured identifiers. Two output shapes to handle:
-- The CLI's hint `No projects configured. Run 'qf login <identifier> <token>' to get started.` → treat as zero configured.
+- The CLI's hint `No projects configured. Run 'qf login <identifier>' to sign in.` (older CLIs word the rest of the line differently, so match the prefix `No projects configured`, not the whole line) → treat as zero configured.
 - One identifier per line → parse into a set.
 
 Cross-reference each `Identifier` from the `## Packages` table against this set:
@@ -130,7 +130,7 @@ Cross-reference each `Identifier` from the `## Packages` table against this set:
     qf login <missing-identifier-2>
   ```
 
-Tokens are obtained from <https://qualflare.com/settings/api-keys>. Run each `qf login` in your own terminal — it asks for the token at a hidden prompt; never paste a token into the chat. The CLI stores them locally in `~/.config/qualflare/config.toml` (or platform equivalent) after `qf login`.
+Run each `qf login` in your own terminal — it opens the browser to sign in and approve (add `--no-browser` on an SSH or remote machine); never run it from the skill and never paste a token or code into the chat. Tokens are only for CI (`QF_TOKEN`, created under Project Settings › Access Tokens in the app). The CLI stores sign-ins locally in `~/.config/qualflare/config.toml` (or platform equivalent).
 
 ---
 

@@ -13,7 +13,7 @@ Before you begin, install the [Qualflare CLI](#installing-the-qualflare-cli) —
 Add the plugin to Claude Code:
 
 ```
-/plugin marketplace add Qualflare/qualflare-claude-code
+/plugin marketplace add Qualflare/qualflare-ai
 ```
 
 Install it in your current project:
@@ -50,7 +50,7 @@ Every command runs from the Claude Code chat — no terminal, no config files.
 The same plugin works in [omp](https://omp.sh), which reads this repository's marketplace file:
 
 ```sh
-omp plugin marketplace add Qualflare/qualflare-claude-code
+omp plugin marketplace add Qualflare/qualflare-ai
 omp plugin install qualflare@qualflare
 ```
 
@@ -168,7 +168,7 @@ Pull the latest version at any time:
 
 ## Contributing
 
-Bug reports and pull requests are welcome — open an issue at [github.com/Qualflare/qualflare-claude-code/issues](https://github.com/Qualflare/qualflare-claude-code/issues).
+Bug reports and pull requests are welcome — open an issue at [github.com/Qualflare/qualflare-ai/issues](https://github.com/Qualflare/qualflare-ai/issues).
 
 For development notes — how to test the hook, how to add a new framework, how to cut a release — see [`CLAUDE.md`](./CLAUDE.md).
 
@@ -178,4 +178,4 @@ Licensed under the [Apache License 2.0](LICENSE).
 
 ---
 
-[Qualflare](https://qualflare.com) · [Docs](https://qualflare.com/docs) · [CLI releases](https://github.com/Qualflare/qualflare-cli/releases) · [Issues](https://github.com/Qualflare/qualflare-claude-code/issues) · [Changelog](https://github.com/Qualflare/qualflare-claude-code/releases)
+[Qualflare](https://qualflare.com) · [Docs](https://qualflare.com/docs) · [CLI releases](https://github.com/Qualflare/qualflare-cli/releases) · [Issues](https://github.com/Qualflare/qualflare-ai/issues) · [Changelog](https://github.com/Qualflare/qualflare-ai/releases)

@@ -41,7 +41,10 @@ export const DIRECTORY_RESULTS = new Set(['cypress', 'junit', 'webdriverio', 'ap
 
 // The CLI's own "nothing configured" hint. Skills quote it verbatim to match
 // `qf projects` output, so it is exempt from the token-on-argv check.
-const CLI_EMPTY_HINT = "No projects configured. Run 'qf login <identifier> <token>' to get started.";
+const CLI_EMPTY_HINTS = [
+  "No projects configured. Run 'qf login <identifier>' to sign in.",
+  "No projects configured. Run 'qf login <identifier> <token>' to get started.", // CLIs before browser sign-in
+];
 
 function listMarkdown(root) {
   const out = [];
@@ -176,7 +179,8 @@ const SOLICIT_VERB = String.raw`\b(?:ask|provide|send|reply|enter|paste|share|ty
 export function checkTokenHandling({ files }) {
   const out = [];
   for (const f of files) {
-    const text = f.text.split(CLI_EMPTY_HINT).join(' '.repeat(CLI_EMPTY_HINT.length));
+    let text = f.text;
+    for (const hint of CLI_EMPTY_HINTS) text = text.split(hint).join(' '.repeat(hint.length));
     const pushAt = (index, message) =>
       out.push({ check: 'token-in-chat-or-argv', file: f.rel, line: lineOf(text, index), message });
     for (const c of commandContexts(text)) {

@@ -94,19 +94,19 @@ Before running `/qf-init`, make sure you have:
 
 - [Claude Code](https://claude.ai/code) — the CLI or desktop app
 - **Qualflare CLI (`qf`)** — installed and on your PATH (see below)
-- A Qualflare token per identifier — `/qf-init` tells you which identifiers your project needs and prints the exact `qf login` commands to run.
+- A Qualflare sign-in per identifier — `/qf-init` tells you which identifiers your project needs and prints the exact `qf login` commands to run.
 
 ### Authentication
 
-Qualflare uses per-project tokens stored locally. After `/qf-init` prints your identifiers, register each one **in your own terminal**:
+Qualflare saves a sign-in per project locally. After `/qf-init` prints your identifiers, register each one **in your own terminal**:
 
 ```bash
 qf login <identifier>
 ```
 
-`qf login` asks for the token at a hidden prompt. Don't paste tokens into the Claude Code chat (the chat is sent to the model and saved in the session transcript), and don't pass them as a command-line argument (shell history and the process list keep them).
+`qf login` opens your browser: sign in to Qualflare, pick the project and approve. On an SSH or remote machine, add `--no-browser`, open the link it prints on any device and paste the code at the hidden prompt. Don't paste tokens or codes into the Claude Code chat (the chat is sent to the model and saved in the session transcript), and don't pass a token as a command-line argument (shell history and the process list keep it).
 
-In a monorepo, each package gets its own identifier — run `qf login` once per package. Tokens live in `~/.config/qualflare/config.toml` after login. Get tokens at `https://app.qualflare.com/project/<identifier>/settings/access-tokens`.
+In a monorepo, each package gets its own identifier — run `qf login` once per package. Sign-ins live in `~/.config/qualflare/config.toml` after login and renew themselves; revoke one under Project Settings › Access Tokens › Connected apps. In CI, use a project access token in `QF_TOKEN` instead.
 
 `QF_API_KEY` is no longer read by the CLI — remove it from your environment if you have it set.
 

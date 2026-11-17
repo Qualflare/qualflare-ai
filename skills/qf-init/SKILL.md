@@ -252,14 +252,14 @@ qf projects
 ```
 
 Capture the set of identifiers that are already saved. Two output shapes to handle:
-- The CLI's hint `No projects configured. Run 'qf login <identifier> <token>' to get started.` → treat as zero configured. (That hint is the CLI's own wording; never repeat its `<token>` argument form to the user.)
+- The CLI's hint `No projects configured. Run 'qf login <identifier>' to sign in.` → treat as zero configured. Older CLIs word the rest of the line differently, so match the prefix `No projects configured`, not the whole line, and never repeat a `<token>` argument form to the user.
 - One identifier per line → parse into a set.
 
 Build `missing` = the list of `Identifier` values from `## Packages` that are **not** present in the saved set.
 
 If `missing` is empty: print `✅  All project identifiers are already authenticated.` and proceed to Step 7.
 
-**Never ask for, accept, or handle the token yourself.** A Qualflare token is a project write credential: anything typed into this chat is sent to the model and kept in the session transcript, and a token passed as a command-line argument is visible in the process list and shell history. The user registers each token with `qf login <identifier>`, which reads it at a hidden terminal prompt. If the user pastes a token into the chat anyway, do not use it or repeat it; tell them to revoke it in Qualflare (it is now in the transcript), create a new one, and register it with `qf login` as below.
+**Never ask for, accept, or handle the token yourself.** A Qualflare token is a project write credential: anything typed into this chat is sent to the model and kept in the session transcript, and a token passed as a command-line argument is visible in the process list and shell history. The user signs in with `qf login <identifier>`, which opens their browser to approve the CLI for a project (no token to copy), or reads a token at a hidden terminal prompt on older CLIs. If the user pastes a token or a sign-in code into the chat anyway, do not use it or repeat it; tell them to revoke it in Qualflare (it is now in the transcript; browser sign-ins are listed under Project Settings › Access Tokens › Connected apps), and sign in again with `qf login` as below.
 
 Print, once, for all identifiers in `missing`:
 
@@ -269,13 +269,15 @@ Print, once, for all identifiers in `missing`:
      qf login <identifier-1>
      qf login <identifier-2>
 
-   Each command asks for the token at a hidden prompt.
-   Create tokens at: https://app.qualflare.com/project/<identifier>/settings/access-tokens
+   Each command opens your browser: sign in to Qualflare, pick the project and approve
+   (Editors and above; uncheck "Allow changes" for read-only access).
+   On an SSH or remote machine, add --no-browser, open the link it prints on any device
+   and paste the code at the hidden prompt. Never paste a code someone else sends you.
 
    Reply `done` when finished, or `skip` to authenticate later.
 ```
 
-Emit one `qf login <identifier>` line per missing identifier. Then **stop and wait for the user's next message.** Do not run `qf login` yourself: it needs an interactive terminal for the hidden prompt, and the Bash tool does not provide one.
+Emit one `qf login <identifier>` line per missing identifier. Then **stop and wait for the user's next message.** Do not run `qf login` yourself: it needs an interactive terminal and a browser, and the Bash tool provides neither.
 
 - If the user replies `skip` (case-insensitive): print `⏭  Skipped authentication — run \`qf login <identifier>\` in your terminal before running \`/qf-run\`.` and proceed to Step 7.
 - Otherwise re-run `qf projects` and rebuild `missing`. For each identifier that is now saved, print `✅  Saved credentials for <identifier>.` For each identifier still missing, print `⚠️  Identifier \`<id>\` still not saved — run \`qf login <id>\` in your terminal before using \`/qf-run\`.` Then proceed to Step 7 (do not loop).
@@ -357,7 +359,7 @@ At the start of every session, read `.qualflare/test-state.md` silently before r
 
 Run `qf projects` to list the locally configured CLI identifiers. Two cases to handle:
 
-- **Output is the CLI's hint** `No projects configured. Run 'qf login <identifier> <token>' to get started.` → treat as zero configured.
+- **Output is the CLI's hint**, which starts `No projects configured` → treat as zero configured.
 - **Output is one identifier per line** → parse into a set.
 
 Cross-reference the identifiers in the `## Packages` table against this set. Build a list of `Identifier` values that are missing locally.
@@ -379,7 +381,7 @@ Next steps:
   ⚠️  Still need to authenticate before running /qf-run — in your own terminal:
       qf login <identifier-1>
       qf login <identifier-2>
-      Each asks for the token at a hidden prompt. Get tokens at https://app.qualflare.com/project/<identifier>/settings/access-tokens
+      Each opens your browser to sign in and approve (add --no-browser over SSH).
 ```
 
 Emit one `qf login <identifier>` line per identifier that is still missing from `qf projects`. Omit the entire `⚠️  Authenticate` block if every identifier in `## Packages` is configured.
